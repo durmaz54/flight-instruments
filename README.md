@@ -1,2 +1,2 @@
 # flight-instruments
-with pyqt5
+github deneme 2
