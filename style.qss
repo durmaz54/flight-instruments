@@ -1,0 +1,33 @@
+
+*{
+    background-color: #2B3A42;
+}
+#widget2 {
+    border-style: solid;
+    border-width: 1px;
+    border-color: red;
+}
+QLabel {
+    font: 15px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: blue;
+}
+#speed_label {
+    color: #5bb9f0;
+    font: 15px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: blue;
+}
+#bottom_frame {
+    background-color: rgb(255, 0,0)
+}
+
+QProgressBar::chunk#slope_bar 
+{
+    background: QLinearGradient( x1: 1, y1: 0,
+                             x2: 1, y2: 0, 
+                            stop: 0 #000fff,
+                            stop: 1 #ff000f );
+}
