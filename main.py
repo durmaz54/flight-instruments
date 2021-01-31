@@ -1,4 +1,4 @@
-from PyQt5.QtCore import right
+from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 import sys
@@ -6,9 +6,10 @@ import sys
 class Window(QWidget):
     def __init__(self):
         super().__init__()
-        self.setGeometry(300,300,1000,500)
-        self.setWindowTitle("example program")
-        self.setWindowIcon(QIcon("web.jpg"))
+        self.setGeometry(250,150,1200,800)
+        self.setWindowTitle("Flight Instruments")
+        self.setWindowIcon(QIcon("icon.jpg"))
+        self.setStyleSheet(open("style.qss","r").read())
         self.designLayout()
         self.show()
         
@@ -16,22 +17,56 @@ class Window(QWidget):
         #layout
         main_vboxlayout = QVBoxLayout()
         mid_hboxlayout = QHBoxLayout()
-        right_layout = QVBoxLayout()
-        speed_label = QLabel("denemeeeee")
+        mid_hboxlayout.setObjectName("mid_hboxlayout")
+        right_layout = QGridLayout()
+        
+        #widget
+        speed_label = QLabel("bar")
+        speed_label.setObjectName("speed_label")
+        a_label = QLabel("a instrument")
+        b_label = QLabel("b instrument")
+        c_label = QLabel("c instrument")
+        d_label = QLabel("d instrument")
+        e_label = QLabel("bar")
+        #---------slopebar-------------
+        self.slope_bar_value = 35
+        self.slopeleft_bar = QProgressBar()
+        self.slopeleft_bar.setOrientation(Qt.Vertical)
+        self.slopeleft_bar.setValue(self.slope_bar_value)
+        self.slopeleft_bar.setObjectName("slope_bar")
+        self.slopeleft_bar.setFormat("Slope")
+        self.sloperight_bar = QProgressBar()
+        self.sloperight_bar.setOrientation(Qt.Vertical)
+        self.sloperight_bar.setValue(abs((self.slope_bar_value)-100))
+        self.sloperight_bar.setObjectName("slope_bar")
+        self.sloperight_bar.setFormat("Slope")
+        #-----------slopebar--------------
         widget2 = QFrame()
-        widget3 = QFrame()
-        #style
-        speed_label.setStyleSheet("background-color: rgb(0, 0, 255);color: rgb(255,0,0);")
-        widget2.setStyleSheet("background-color: rgb(255, 0, 0)")
-        widget3.setStyleSheet("background-color: rgb(255, 255, 0)")
-        #add
-        right_layout.addWidget(speed_label)
-        right_layout.addWidget(QPushButton("deneme"))
+        widget2.setObjectName("widget2")
+        bottom_frame = QFrame()
+        bottom_frame.setObjectName("bottom_frame")
+
+        #---------------------------ADD-------------------------
+        #right layout
+        right_layout.addWidget(self.slopeleft_bar,0,0,10,1) # (y,x)
+        right_layout.addWidget(a_label,0,1,5,4)
+        right_layout.addWidget(b_label,0,5,5,4)
+        right_layout.addWidget(c_label,5,1,5,4)
+        right_layout.addWidget(d_label,5,5,5,4)
+        right_layout.addWidget(self.sloperight_bar,0,10,10,1)
+        #-----------
         mid_hboxlayout.addWidget(widget2,7)
         mid_hboxlayout.addLayout(right_layout,3)
         main_vboxlayout.addLayout(mid_hboxlayout,15)
-        main_vboxlayout.addWidget(widget3,5)
+        main_vboxlayout.addWidget(bottom_frame,5)
         self.setLayout(main_vboxlayout)
+
+    def keyPressEvent(self, event):
+        if event.key() == Qt.Key_Space:
+            self.slope_bar_value += 5
+            self.slopeleft_bar.setValue(self.slope_bar_value)
+            self.sloperight_bar.setValue(abs((self.slope_bar_value)-100))
+            print(self.slope_bar_value)
 
 app = QApplication(sys.argv)
 window = Window()
