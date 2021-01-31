@@ -1,2 +1,2 @@
 # flight-instruments
-right-layout tasarlanıyor.
+right-layout'da grid düzenlemeleri yapıldı.
