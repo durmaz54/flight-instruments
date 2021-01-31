@@ -1,2 +1,2 @@
 # flight-instruments
-right-layout'da grid düzenlemeleri yapıldı.
+right-layout'da grid düzenlemeleri yapıldı...
