@@ -1,6 +1,10 @@
+import io
+from os import close
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
+from PyQt5.QtWebEngineWidgets import *
+import folium
 import sys
 
 class Window(QWidget):
@@ -55,14 +59,28 @@ class Window(QWidget):
         right_layout.addWidget(d_label,5,5,5,4)
         right_layout.addWidget(self.sloperight_bar,0,10,10,1)
         #-----------
-        mid_hboxlayout.addWidget(widget2,7)
+        mid_hboxlayout.addWidget(self.googleMapWidget(),7)
         mid_hboxlayout.addLayout(right_layout,3)
         main_vboxlayout.addLayout(mid_hboxlayout,15)
         main_vboxlayout.addWidget(bottom_frame,5)
         self.setLayout(main_vboxlayout)
+    
+    
+    def googleMapWidget(self):
+        m = folium.Map(location=[41.092628, 30.572079],zoom_start=15)
+        self.map_data = io.BytesIO()
+        m.save(self.map_data, close_file=False)
+        map_webengine = QWebEngineView()
+        map_webengine.setHtml(self.map_data.getvalue().decode())
+
+        return map_webengine
+
+        
 
     def keyPressEvent(self, event):
         if event.key() == Qt.Key_Space:
+            if self.slope_bar_value >= 100:
+                self.slope_bar_value = 0
             self.slope_bar_value += 5
             self.slopeleft_bar.setValue(self.slope_bar_value)
             self.sloperight_bar.setValue(abs((self.slope_bar_value)-100))
