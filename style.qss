@@ -16,3 +16,6 @@ QLabel#vAngle_value {
 QLabel#hAngle_value {
     color: blue;
 }
+QLabel#text {
+    color: white;
+}
